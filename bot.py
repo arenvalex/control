@@ -61,7 +61,32 @@ async def alarm5(context):
         chat_id=CHAT_ID,
         text="lütfen sahalardaki bekleyen çekimleri kontrol ediniz. uzun süre bekleyen varsa sahaya iletiniz."
     )
+    
+async def sabah_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID, text="""☀️ Günaydın ekip
 
+Yeni bir gün başladı.
+Herkese hatasız ve sorunsuz mesailer dileriz.
+Kolay gelsin 💪""")
+
+async def ogle_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID, text="""☕ Saat 12 oldu
+
+Kahveleri alalım biraz enerji toplayalım.
+Herkese hatasız mesailer dileriz.""")
+
+async def aksam_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID, text="""🔄 Yeni ekip hoş geldiniz
+
+Devralan ekibe iyi mesailer.
+Sahalar ve çekimler kontrol edilerek devam edelim.""")
+
+async def gece_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID, text="""🌙 Gece mesaisi başlamıştır
+
+Gece ekibine sakin ve sorunsuz bir mesai dileriz.
+Kolay gelsin.""")
+    
 def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
@@ -69,6 +94,13 @@ def main():
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), mesaj_kontrol))
 
     job = app.job_queue
+
+    # ---- GÜNLÜK MESAJLAR ----
+
+        job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
+        job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
+        job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
+        job.run_daily(gece_mesaji, time(hour=0, minute=0, tzinfo=tz))
 
     # -------- HER SAAT BAŞI --------
     for h in range(24):
