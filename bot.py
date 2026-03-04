@@ -53,12 +53,6 @@ async def alarm5(context):
         text="Lütfen sahalardaki bekleyen çekimleri kontrol ediniz. Uzun süre bekleyen varsa sahaya iletiniz."
     )
 
-async def arda_mesaji(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Bu Lara çok olmaya başladı sürekli bana Arda'nın dedikodusunu yapıyor"
-    )
-
 
 # -------- GECECİ MESAJLARI --------
 
@@ -138,8 +132,7 @@ def main():
     job.run_daily(gece_hatirlatma,time(hour=23,minute=50,tzinfo=tz))
     job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
     job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
-    job.run_daily(arda_mesaji,time(hour=1,minute=52,tzinfo=tz))
-
+  
     # GECECİ DÜRTME
     for h in range(0,8):
         job.run_daily(gececi_troll,time(hour=h,minute=20,tzinfo=tz))
