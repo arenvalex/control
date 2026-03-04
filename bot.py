@@ -138,7 +138,7 @@ def main():
     job.run_daily(gece_hatirlatma,time(hour=23,minute=50,tzinfo=tz))
     job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
     job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
-    job.run_daily(arda_mesaji, time(hour=1, minute=30, tzinfo=tz))
+    job.run_daily(arda_mesaji, time(hour=1, minute=40, tzinfo=tz))
     
     # GECECİ DÜRTME
     for h in range(0,8):
