@@ -9,14 +9,21 @@ CHAT_ID = -1002241478647
 
 tz = pytz.timezone("Europe/Istanbul")
 
-# -------- OTOMATİK CEVAPLAR --------
+# ---------------- SOHBET ----------------
+
+selam_cevaplar = [
+"Hoş geldin baba kolay gele",
+"Cehenneme hoş geldin 😄",
+"Selam kral hoş geldin",
+"Hoş geldin reis",
+"Naber baba"
+]
 
 kolay_cevaplar = [
-"Hoş geldin, kolay gelsin 🙌",
 "Sana da kolay gelsin 💪",
-"Hoş geldin iyi mesailer",
-"Kolay gelsin, iyi çalışmalar",
-"Hoş geldin, güzel bir mesai olsun"
+"Eyvallah sana da kolay gelsin",
+"Kolay gelsin ekip",
+"Kolay gelsin kral"
 ]
 
 async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -24,69 +31,103 @@ async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower()
 
     if "selam" in text:
-        await update.message.reply_text("Selamlar hoş geldin")
+        await update.message.reply_text(random.choice(selam_cevaplar))
 
     elif "kolay gelsin" in text:
         await update.message.reply_text(random.choice(kolay_cevaplar))
 
-# -------- ALARMLAR --------
+
+# ---------------- ALARMLAR ----------------
 
 async def alarm1(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Her şey yolunda mı?"
-    )
-
-async def alarm2(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Gönderilmeyi bekleyen çekim kaç tane? Bekleme sebebiyle yazınız."
-    )
+    await context.bot.send_message(chat_id=CHAT_ID,text="Her şey yolunda mı?")
 
 async def alarm3(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Sahalara test yatırım talebi oluşturunuz."
-    )
+    await context.bot.send_message(chat_id=CHAT_ID,text="Sahalara test yatırım talebi oluşturunuz.")
 
 async def alarm4(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="""Mesai sırasında eğer 2 kişiyseniz
-2 saatte bir yerlerinizi değiştiriniz."""
-    )
+    await context.bot.send_message(chat_id=CHAT_ID,text="Mesai sırasında eğer 2 kişiyseniz 2 saatte bir yerlerinizi değiştiriniz.")
+
+saha_mesajlari = [
+"ALOOOOOOOOOOOOO Uyuma panelde sahalarda bekleyen çek var mı bak?",
+"Bir sahalara bakın da içimiz rahat etsin",
+"Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
+"ALOOOO ekip sahalar nasıl?",
+"Bir gözünü aç bari sahalara bak 👀"
+]
 
 async def alarm5(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="lütfen sahalardaki bekleyen çekimleri kontrol ediniz. uzun süre bekleyen varsa sahaya iletiniz."
-    )
-    
-async def sabah_mesaji(context):
-    await context.bot.send_message(chat_id=CHAT_ID, text="""☀️ Günaydın ekip
+    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(saha_mesajlari))
 
-Yeni bir gün başladı.
-Herkese hatasız ve sorunsuz mesailer dileriz.
-Kolay gelsin 💪""")
 
-async def ogle_mesaji(context):
-    await context.bot.send_message(chat_id=CHAT_ID, text="""☕ Saat 12 oldu
+# ---------------- GECECİ MESAJLARI ----------------
 
-Kahveleri alalım biraz enerji toplayalım.
-Herkese hatasız mesailer dileriz.""")
+gececi_mizah = [
+"ALOOOOO gececi... panelde bekleyen çek varsa ben mi bakayım?",
+"Uyuma lan… sahalarda biri bekliyorsa ayıp olur 😄",
+"Bir bakın şu sahalara, bot olarak ben utanıyorum artık",
+"Panel sessiz… siz de mi sessiz? şüphelendim şimdi 👀",
+"Burada kimse yoksa ben kapatıyorum ışıkları 😄",
+"Gececi kardeşim çay koyduysan bana da söyle",
+"Gece uzun… ama panel daha uzun 😄",
+"Gececi uyursa bot devralır haberiniz olsun",
+"Bir gözünü aç bari… sahalar bakıyor bize"
+]
 
-async def aksam_mesaji(context):
-    await context.bot.send_message(chat_id=CHAT_ID, text="""🔄 Yeni ekip hoş geldiniz
+async def gececi_troll(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(gececi_mizah))
 
-Devralan ekibe iyi mesailer.
-Sahalar ve çekimler kontrol edilerek devam edelim.""")
+
+# ---------------- EKİP MESAJLARI ----------------
+
+ekip_mizah = [
+"ALOOOO ekip… herkes yaşıyor mu?",
+"Bu sessizlik hiç hayra alamet değil",
+"Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
+"Bir sahalara bakın da içimiz rahat etsin",
+"Bot olarak görevimi yapıyorum… siz de yapın 😄",
+"ALOOOOOOOOOOOO ekip hayattayız dimi?",
+"Bu kadar sessizlik normal değil… biri sahalara baksın",
+"Ben botum ama ben bile panik yaptım 😄"
+]
+
+async def ekip_troll(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(ekip_mizah))
+
+
+# ---------------- RANDOM BOT ----------------
+
+random_laf = [
+"Ben burada çalışıyorum siz napıyorsunuz 😄",
+"Ekip sahalar nasıl?",
+"Panel sakin ama ben tetikteyim 👀",
+"Her şey yolundaysa devam 👍"
+]
+
+async def bot_random(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(random_laf))
+
+
+# ---------------- ÖZEL MESAJLAR ----------------
 
 async def gece_mesaji(context):
-    await context.bot.send_message(chat_id=CHAT_ID, text="""🌙 Gece mesaisi başlamıştır
+    await context.bot.send_message(chat_id=CHAT_ID,text="Gececi arkadaşlara Allah kolaylık versin.")
 
-Gece ekibine sakin ve sorunsuz bir mesai dileriz.
-Kolay gelsin.""")
-    
+async def sabah_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text="Sabah kuşlarım uyanmış mı yoksa hala offline mıyız 😄")
+
+async def nobet_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text="Nöbetteyim!!")
+
+async def oguz_mesaji(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text="oguz uyan oguz sen uyursan herkes ölür :d")
+
+async def gece_hatirlatma(context):
+    await context.bot.send_message(chat_id=CHAT_ID,text="ALOOOOOOOOOOOO bekleyen çekimleri 00:00'a göre ayarlat unutma!")
+
+
+# ---------------- BOT ----------------
+
 def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
@@ -95,32 +136,38 @@ def main():
 
     job = app.job_queue
 
-    # ---- GÜNLÜK MESAJLAR ----
+    job.run_daily(gece_mesaji,time(hour=0,minute=2,tzinfo=tz))
+    job.run_daily(sabah_mesaji,time(hour=9,minute=0,tzinfo=tz))
+    job.run_daily(gece_hatirlatma,time(hour=23,minute=50,tzinfo=tz))
+    job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
+    job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
 
-    job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
-    job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
-    job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
-    job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
+    # GECECİ DÜRTME 00-08
+    for h in range(0,8):
+        job.run_daily(gececi_troll,time(hour=h,minute=20,tzinfo=tz))
 
-    # -------- HER SAAT BAŞI --------
+    # EKİP DÜRTME 09-23
+    for h in range(9,23):
+        job.run_daily(ekip_troll,time(hour=h,minute=40,tzinfo=tz))
+
+    # RANDOM BOT
+    for h in [11,15,19]:
+        job.run_daily(bot_random,time(hour=h,minute=10,tzinfo=tz))
+
+    # HER SAAT
     for h in range(24):
-        job.run_daily(alarm1, time(hour=h, minute=0, tzinfo=tz))
+        job.run_daily(alarm1,time(hour=h,minute=0,tzinfo=tz))
 
-    # -------- HER SAAT 30 --------
+    # 2 SAATTE BİR
+    for h in range(0,24,2):
+        job.run_daily(alarm3,time(hour=h,minute=10,tzinfo=tz))
+
+    for h in range(0,24,2):
+        job.run_daily(alarm4,time(hour=h,minute=5,tzinfo=tz))
+
+    # SAHA KONTROL
     for h in range(24):
-        job.run_daily(alarm2, time(hour=h, minute=30, tzinfo=tz))
-
-    # -------- 2 SAATTE BİR 10 GEÇE --------
-    for h in range(0, 24, 2):
-        job.run_daily(alarm3, time(hour=h, minute=10, tzinfo=tz))
-
-    # -------- 2 SAATTE BİR 05 GEÇE --------
-    for h in range(0, 24, 2):
-        job.run_daily(alarm4, time(hour=h, minute=5, tzinfo=tz))
-
-    # -------- HER SAAT 15 GEÇE --------
-    for h in range(24):
-        job.run_daily(alarm5, time(hour=h, minute=15, tzinfo=tz))
+        job.run_daily(alarm5,time(hour=h,minute=15,tzinfo=tz))
 
     print("Bot aktif")
 
