@@ -95,12 +95,12 @@ def main():
 
     job = app.job_queue
 
-   # ---- GÜNLÜK MESAJLAR ----
+    # ---- GÜNLÜK MESAJLAR ----
 
-job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
-job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
-job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
-job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
+    job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
+    job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
+    job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
+    job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
 
     # -------- HER SAAT BAŞI --------
     for h in range(24):
@@ -118,9 +118,9 @@ job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
     for h in range(0, 24, 2):
         job.run_daily(alarm4, time(hour=h, minute=5, tzinfo=tz))
 
-   # HER SAAT 15 GEÇE
+    # -------- HER SAAT 15 GEÇE --------
     for h in range(24):
-    job.run_daily(alarm5, time(hour=h, minute=15, tzinfo=tz))
+        job.run_daily(alarm5, time(hour=h, minute=15, tzinfo=tz))
 
     print("Bot aktif")
 
