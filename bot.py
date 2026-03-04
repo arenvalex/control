@@ -9,14 +9,13 @@ CHAT_ID = -1002241478647
 
 tz = pytz.timezone("Europe/Istanbul")
 
-# ---------------- SOHBET ----------------
+# -------- SOHBET --------
 
 selam_cevaplar = [
 "Hoş geldin baba kolay gele",
 "Cehenneme hoş geldin 😄",
 "Selam kral hoş geldin",
-"Hoş geldin reis",
-"Naber baba"
+"Hoş geldin reis"
 ]
 
 kolay_cevaplar = [
@@ -37,7 +36,7 @@ async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(random.choice(kolay_cevaplar))
 
 
-# ---------------- ALARMLAR ----------------
+# -------- ALARMLAR --------
 
 async def alarm1(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Her şey yolunda mı?")
@@ -48,19 +47,14 @@ async def alarm3(context):
 async def alarm4(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Mesai sırasında eğer 2 kişiyseniz 2 saatte bir yerlerinizi değiştiriniz.")
 
-saha_mesajlari = [
-"ALOOOOOOOOOOOOO Uyuma panelde sahalarda bekleyen çek var mı bak?",
-"Bir sahalara bakın da içimiz rahat etsin",
-"Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
-"ALOOOO ekip sahalar nasıl?",
-"Bir gözünü aç bari sahalara bak 👀"
-]
-
 async def alarm5(context):
-    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(saha_mesajlari))
+    await context.bot.send_message(
+        chat_id=CHAT_ID,
+        text="Lütfen sahalardaki bekleyen çekimleri kontrol ediniz. Uzun süre bekleyen varsa sahaya iletiniz."
+    )
 
 
-# ---------------- GECECİ MESAJLARI ----------------
+# -------- GECECİ MESAJLARI --------
 
 gececi_mizah = [
 "ALOOOOO gececi... panelde bekleyen çek varsa ben mi bakayım?",
@@ -69,16 +63,14 @@ gececi_mizah = [
 "Panel sessiz… siz de mi sessiz? şüphelendim şimdi 👀",
 "Burada kimse yoksa ben kapatıyorum ışıkları 😄",
 "Gececi kardeşim çay koyduysan bana da söyle",
-"Gece uzun… ama panel daha uzun 😄",
-"Gececi uyursa bot devralır haberiniz olsun",
-"Bir gözünü aç bari… sahalar bakıyor bize"
+"Gece uzun… ama panel daha uzun 😄"
 ]
 
 async def gececi_troll(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(gececi_mizah))
 
 
-# ---------------- EKİP MESAJLARI ----------------
+# -------- EKİP MESAJLARI --------
 
 ekip_mizah = [
 "ALOOOO ekip… herkes yaşıyor mu?",
@@ -87,7 +79,6 @@ ekip_mizah = [
 "Bir sahalara bakın da içimiz rahat etsin",
 "Bot olarak görevimi yapıyorum… siz de yapın 😄",
 "ALOOOOOOOOOOOO ekip hayattayız dimi?",
-"Bu kadar sessizlik normal değil… biri sahalara baksın",
 "Ben botum ama ben bile panik yaptım 😄"
 ]
 
@@ -95,7 +86,7 @@ async def ekip_troll(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(ekip_mizah))
 
 
-# ---------------- RANDOM BOT ----------------
+# -------- RANDOM BOT --------
 
 random_laf = [
 "Ben burada çalışıyorum siz napıyorsunuz 😄",
@@ -108,7 +99,7 @@ async def bot_random(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(random_laf))
 
 
-# ---------------- ÖZEL MESAJLAR ----------------
+# -------- ÖZEL MESAJLAR --------
 
 async def gece_mesaji(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Gececi arkadaşlara Allah kolaylık versin.")
@@ -126,7 +117,7 @@ async def gece_hatirlatma(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="ALOOOOOOOOOOOO bekleyen çekimleri 00:00'a göre ayarlat unutma!")
 
 
-# ---------------- BOT ----------------
+# -------- BOT --------
 
 def main():
 
@@ -142,11 +133,11 @@ def main():
     job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
     job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
 
-    # GECECİ DÜRTME 00-08
+    # GECECİ DÜRTME
     for h in range(0,8):
         job.run_daily(gececi_troll,time(hour=h,minute=20,tzinfo=tz))
 
-    # EKİP DÜRTME 09-23
+    # EKİP DÜRTME
     for h in range(9,23):
         job.run_daily(ekip_troll,time(hour=h,minute=40,tzinfo=tz))
 
@@ -165,7 +156,7 @@ def main():
     for h in range(0,24,2):
         job.run_daily(alarm4,time(hour=h,minute=5,tzinfo=tz))
 
-    # SAHA KONTROL
+    # HER SAAT 15
     for h in range(24):
         job.run_daily(alarm5,time(hour=h,minute=15,tzinfo=tz))
 
