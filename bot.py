@@ -1,13 +1,12 @@
 import os
 import random
-import asyncio
 import pytz
 from datetime import time
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
-TOKEN = os.getenv("8675707540:AAHgenEKFtA-HiqRZhTYfkWdbdMsnl5g89A")
-CHAT_ID = int(os.getenv("1002241478647"))
+TOKEN = "8675707540:AAHgenEKFtA-HiqRZhTYfkWdbdMsnl5g89A"
+CHAT_ID = -1002241478647
 
 tz = pytz.timezone("Europe/Istanbul")
 
@@ -31,7 +30,7 @@ async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif "kolay gelsin" in text:
         await update.message.reply_text(random.choice(kolay_cevaplar))
 
-# -------- ALARMLAR --------
+# -------- ALARM MESAJLARI --------
 
 async def alarm1(context):
     await context.bot.send_message(
@@ -64,9 +63,7 @@ async def alarm5(context):
         text="lütfen sahalardaki bekleyen çekimleri kontrol ediniz. uzun süre bekleyen varsa sahaya iletiniz."
     )
 
-# -------- BOT --------
-
-async def main():
+def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
 
@@ -74,10 +71,10 @@ async def main():
 
     job = app.job_queue
 
-    # her saat başı
+    # Her saat başı
     job.run_repeating(alarm1, interval=3600, first=5)
 
-    # her saat 30
+    # Her saat 30
     job.run_repeating(alarm2, interval=3600, first=1800)
 
     # 2 saatte bir 10 geçe
@@ -93,6 +90,7 @@ async def main():
 
     print("Bot aktif")
 
-    await app.run_polling()
+    app.run_polling()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    main()
