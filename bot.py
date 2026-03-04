@@ -95,12 +95,12 @@ def main():
 
     job = app.job_queue
 
-    # ---- GÜNLÜK MESAJLAR ----
+   # ---- GÜNLÜK MESAJLAR ----
 
-        job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
-        job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
-        job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
-        job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
+job.run_daily(sabah_mesaji, time(hour=8, minute=0, tzinfo=tz))
+job.run_daily(ogle_mesaji, time(hour=12, minute=0, tzinfo=tz))
+job.run_daily(aksam_mesaji, time(hour=16, minute=0, tzinfo=tz))
+job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
 
     # -------- HER SAAT BAŞI --------
     for h in range(24):
