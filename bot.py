@@ -56,7 +56,6 @@ async def arda_mesaji(context):
     await context.bot.send_message(
         chat_id=CHAT_ID,
         text="Bu Lara çok olmaya başladı sürekli bana Arda'nın dedikodusunu yapıyor"
-            
     )
 
 
