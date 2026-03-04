@@ -4,7 +4,7 @@ from datetime import time
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
-TOKEN = "8675707540:AAHgenEKFtA-HiqRZhTYfkWdbdMsnl5g89A"
+TOKEN = "8675707540:AAFL_9t3xnAktDPZQSs-9YJeaPuqNqu_N5Y"
 CHAT_ID = -1002241478647
 
 tz = pytz.timezone("Europe/Istanbul")
