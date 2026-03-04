@@ -1,4 +1,3 @@
-import os
 import random
 import pytz
 from datetime import time
@@ -30,7 +29,7 @@ async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif "kolay gelsin" in text:
         await update.message.reply_text(random.choice(kolay_cevaplar))
 
-# -------- ALARM MESAJLARI --------
+# -------- ALARMLAR --------
 
 async def alarm1(context):
     await context.bot.send_message(
@@ -71,22 +70,26 @@ def main():
 
     job = app.job_queue
 
-    # Her saat başı
-    job.run_repeating(alarm1, interval=3600, first=5)
+    # -------- HER SAAT BAŞI --------
+    for h in range(24):
+        job.run_daily(alarm1, time(hour=h, minute=0, tzinfo=tz))
 
-    # Her saat 30
-    job.run_repeating(alarm2, interval=3600, first=1800)
+    # -------- HER SAAT 30 --------
+    for h in range(24):
+        job.run_daily(alarm2, time(hour=h, minute=30, tzinfo=tz))
 
-    # 2 saatte bir 10 geçe
+    # -------- 2 SAATTE BİR 10 GEÇE --------
     for h in range(0, 24, 2):
         job.run_daily(alarm3, time(hour=h, minute=10, tzinfo=tz))
 
-    # 2 saatte bir 05 geçe
+    # -------- 2 SAATTE BİR 05 GEÇE --------
     for h in range(0, 24, 2):
         job.run_daily(alarm4, time(hour=h, minute=5, tzinfo=tz))
 
-    # 15 dakikada bir
-    job.run_repeating(alarm5, interval=900, first=10)
+    # -------- 15 DAKİKADA BİR --------
+    for h in range(24):
+        for m in [0, 15, 30, 45]:
+            job.run_daily(alarm5, time(hour=h, minute=m, tzinfo=tz))
 
     print("Bot aktif")
 
