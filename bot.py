@@ -86,10 +86,9 @@ def main():
     for h in range(0, 24, 2):
         job.run_daily(alarm4, time(hour=h, minute=5, tzinfo=tz))
 
-    # -------- 15 DAKİKADA BİR --------
+   # HER SAAT 15 GEÇE
     for h in range(24):
-        for m in [0, 15, 30, 45]:
-            job.run_daily(alarm5, time(hour=h, minute=m, tzinfo=tz))
+    job.run_daily(alarm5, time(hour=h, minute=15, tzinfo=tz))
 
     print("Bot aktif")
 
