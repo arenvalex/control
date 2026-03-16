@@ -74,6 +74,7 @@ async def gececi_troll(context):
 
 ekip_mizah = [
 "ALOOOO ekip… herkes yaşıyor mu?",
+"Şu anki ruh halim: %10 kahve, %20 panik, %70 'neyse ya hallederiz' vurdumduymazlığı."    
 "Bu sessizlik hiç hayra alamet değil",
 "Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
 "Bir sahalara bakın da içimiz rahat etsin",
@@ -89,10 +90,20 @@ async def ekip_troll(context):
 # -------- RANDOM BOT --------
 
 random_laf = [
+"Arkadaşlar, vizyonumuz Elon Musk ama bütçemiz Mahmut Abi'nin bakkal defteri gibi. Aradaki farkı vizyonla kapatırız herhalde?",
+"Beyler operasyon o kadar pürüzsüz ki bir an battık sandım. Bu sessizlik biraz ürkütücü, her şey yolunda mı?",
+"Saha ekibi yine 'hallediyoruz' modunda mı yoksa gerçekten hallediyor mu? Aradaki o ince çizgide dans ediyoruz şu an.",
+"Çekim paneliyle bakışıyoruz... o bana 'para yok' diyor, ben ona 'vizyon var' diyorum. Kazananı saha belirleyecek.",
+"Hissediyorum... Bir yerlerde bir çekim talebi bekliyor ve bir operasyoncu şu an kahve içiyor. O kahveyi bırak ve klavyeye dokun dostum.",
+"Neyse ben kaçtım, sisteme bir iki şey yazmam lazım. Siz arada sahalara göz atın.",
+"Arkadaşlar 'hallettik' mesajı gelene kadar ben kendimi nadasa bırakıyorum. Gerçekten hallettiyseniz uyandırın.",
+"Bugün sistemle küçük bir anlaşma yaptım: biz çalışacağız, o da sorun çıkarmayacak. Umarım sözünde durur.",
+"Operasyon günlüğü: Herkes sessiz, panel sakin, ben şüpheliyim.",
 "Ben burada çalışıyorum siz napıyorsunuz 😄",
 "Ekip sahalar nasıl?",
 "Panel sakin ama ben tetikteyim 👀",
-"Her şey yolundaysa devam 👍"
+"Her şey yolundaysa devam 👍"    
+"Şu an bir yerde bir çekim talebi bekliyor olabilir. Ona yalnız olmadığını hissettirelim.",   
 ]
 
 async def bot_random(context):
