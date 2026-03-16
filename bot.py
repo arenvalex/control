@@ -2,10 +2,11 @@ import random
 import pytz
 from datetime import time
 from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
+from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters, CommandHandler
 
 TOKEN = "8675707540:AAFL_9t3xnAktDPZQSs-9YJeaPuqNqu_N5Y"
 CHAT_ID = -1002241478647
+ADMIN_ID = 8467771210
 
 tz = pytz.timezone("Europe/Istanbul")
 
@@ -36,6 +37,38 @@ async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(random.choice(kolay_cevaplar))
 
 
+# -------- GİZLİ KOMUTLAR --------
+
+async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    if update.effective_user.id != ADMIN_ID:
+        return
+
+    await update.message.delete()
+
+    mesaj = " ".join(context.args)
+
+    await context.bot.send_message(
+        chat_id=CHAT_ID,
+        text=mesaj
+    )
+
+
+async def troll(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    if update.effective_user.id != ADMIN_ID:
+        return
+
+    await update.message.delete()
+
+    mesaj = random.choice(random_laf)
+
+    await context.bot.send_message(
+        chat_id=CHAT_ID,
+        text=mesaj
+    )
+
+
 # -------- ALARMLAR --------
 
 async def alarm1(context):
@@ -54,7 +87,7 @@ async def alarm5(context):
     )
 
 
-# -------- GECECİ MESAJLARI --------
+# -------- GECECİ --------
 
 gececi_mizah = [
 "ALOOOOO gececi... panelde bekleyen çek varsa ben mi bakayım?",
@@ -70,11 +103,11 @@ async def gececi_troll(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(gececi_mizah))
 
 
-# -------- EKİP MESAJLARI --------
+# -------- EKİP --------
 
 ekip_mizah = [
 "ALOOOO ekip… herkes yaşıyor mu?",
-"Şu anki ruh halim: %10 kahve, %20 panik, %70 'neyse ya hallederiz' vurdumduymazlığı."    
+"Şu anki ruh halim: %10 kahve, %20 panik, %70 'neyse ya hallederiz'",
 "Bu sessizlik hiç hayra alamet değil",
 "Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
 "Bir sahalara bakın da içimiz rahat etsin",
@@ -87,30 +120,30 @@ async def ekip_troll(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(ekip_mizah))
 
 
-# -------- RANDOM BOT --------
+# -------- RANDOM --------
 
 random_laf = [
-"Arkadaşlar, vizyonumuz Elon Musk ama bütçemiz Mahmut Abi'nin bakkal defteri gibi. Aradaki farkı vizyonla kapatırız herhalde?",
-"Beyler operasyon o kadar pürüzsüz ki bir an battık sandım. Bu sessizlik biraz ürkütücü, her şey yolunda mı?",
-"Saha ekibi yine 'hallediyoruz' modunda mı yoksa gerçekten hallediyor mu? Aradaki o ince çizgide dans ediyoruz şu an.",
-"Çekim paneliyle bakışıyoruz... o bana 'para yok' diyor, ben ona 'vizyon var' diyorum. Kazananı saha belirleyecek.",
-"Hissediyorum... Bir yerlerde bir çekim talebi bekliyor ve bir operasyoncu şu an kahve içiyor. O kahveyi bırak ve klavyeye dokun dostum.",
-"Neyse ben kaçtım, sisteme bir iki şey yazmam lazım. Siz arada sahalara göz atın.",
-"Arkadaşlar 'hallettik' mesajı gelene kadar ben kendimi nadasa bırakıyorum. Gerçekten hallettiyseniz uyandırın.",
-"Bugün sistemle küçük bir anlaşma yaptım: biz çalışacağız, o da sorun çıkarmayacak. Umarım sözünde durur.",
-"Operasyon günlüğü: Herkes sessiz, panel sakin, ben şüpheliyim.",
+"Arkadaşlar, vizyonumuz Elon Musk ama bütçemiz Mahmut Abi'nin bakkal defteri gibi.",
+"Beyler operasyon o kadar pürüzsüz ki bir an battık sandım.",
+"Saha ekibi yine 'hallediyoruz' modunda mı yoksa gerçekten hallediyor mu?",
+"Çekim paneliyle bakışıyoruz... o bana 'para yok' diyor ben ona 'vizyon var' diyorum.",
+"Hissediyorum... bir yerde bir çekim talebi bekliyor olabilir.",
+"Neyse ben kaçtım sisteme bir şeyler yazmam lazım.",
+"Arkadaşlar 'hallettik' mesajı gelene kadar ben kendimi nadasa bırakıyorum.",
+"Bugün sistemle küçük bir anlaşma yaptım: biz çalışacağız o da sorun çıkarmayacak.",
+"Operasyon günlüğü: herkes sessiz, panel sakin, ben şüpheliyim.",
 "Ben burada çalışıyorum siz napıyorsunuz 😄",
 "Ekip sahalar nasıl?",
 "Panel sakin ama ben tetikteyim 👀",
-"Her şey yolundaysa devam 👍"    
-"Şu an bir yerde bir çekim talebi bekliyor olabilir. Ona yalnız olmadığını hissettirelim.",   
+"Her şey yolundaysa devam 👍",
+"Şu an bir yerde bir çekim talebi bekliyor olabilir."
 ]
 
 async def bot_random(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(random_laf))
 
 
-# -------- ÖZEL MESAJLAR --------
+# -------- ÖZEL --------
 
 async def gece_mesaji(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Gececi arkadaşlara Allah kolaylık versin.")
@@ -136,6 +169,9 @@ def main():
 
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), mesaj_kontrol))
 
+    app.add_handler(CommandHandler("yaz", yaz))
+    app.add_handler(CommandHandler("troll", troll))
+
     job = app.job_queue
 
     job.run_daily(gece_mesaji,time(hour=0,minute=2,tzinfo=tz))
@@ -143,37 +179,32 @@ def main():
     job.run_daily(gece_hatirlatma,time(hour=23,minute=50,tzinfo=tz))
     job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
     job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
-  
-    # GECECİ DÜRTME
+
     for h in range(0,8):
         job.run_daily(gececi_troll,time(hour=h,minute=20,tzinfo=tz))
 
-    # EKİP DÜRTME
     for h in range(9,23):
         job.run_daily(ekip_troll,time(hour=h,minute=40,tzinfo=tz))
 
-    # RANDOM BOT
     for h in [11,15,19]:
         job.run_daily(bot_random,time(hour=h,minute=10,tzinfo=tz))
 
-    # HER SAAT
     for h in range(24):
         job.run_daily(alarm1,time(hour=h,minute=0,tzinfo=tz))
 
-    # 2 SAATTE BİR
     for h in range(0,24,2):
         job.run_daily(alarm3,time(hour=h,minute=10,tzinfo=tz))
 
     for h in range(0,24,2):
         job.run_daily(alarm4,time(hour=h,minute=5,tzinfo=tz))
 
-    # HER SAAT 15
     for h in range(24):
         job.run_daily(alarm5,time(hour=h,minute=15,tzinfo=tz))
 
     print("Bot aktif")
 
     app.run_polling()
+
 
 if __name__ == "__main__":
     main()
