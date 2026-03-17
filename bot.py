@@ -44,14 +44,14 @@ async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != ADMIN_ID:
         return
 
-    await update.message.delete()
+    try:
+        await update.message.delete()
+    except:
+        pass
 
     mesaj = " ".join(context.args)
 
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text=mesaj
-    )
+    await context.bot.send_message(chat_id=CHAT_ID, text=mesaj)
 
 
 async def troll(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -59,14 +59,14 @@ async def troll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != ADMIN_ID:
         return
 
-    await update.message.delete()
+    try:
+        await update.message.delete()
+    except:
+        pass
 
     mesaj = random.choice(random_laf)
 
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text=mesaj
-    )
+    await context.bot.send_message(chat_id=CHAT_ID, text=mesaj)
 
 
 # -------- ALARMLAR --------
@@ -75,7 +75,7 @@ async def alarm1(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Her şey yolunda mı?")
 
 async def alarm3(context):
-    await context.bot.send_message(chat_id=CHAT_ID,text="Sahalara test yatırım talebi oluşturunuz.")
+    await context.bot.send_message(chat_id=CHAT_ID,text="Genel sahalardaki kasa uygunluğunu öğrenebilir miyiz?")
 
 async def alarm4(context):
     await context.bot.send_message(chat_id=CHAT_ID,text="Mesai sırasında eğer 2 kişiyseniz 2 saatte bir yerlerinizi değiştiriniz.")
@@ -83,7 +83,7 @@ async def alarm4(context):
 async def alarm5(context):
     await context.bot.send_message(
         chat_id=CHAT_ID,
-        text="Lütfen sahalardaki bekleyen çekimleri kontrol ediniz. Uzun süre bekleyen varsa sahaya iletiniz."
+        text="Sahalardaki bekleyen çekimleri kontrol edelim, uzun süre bekleyen varsa bilgi geçelim."
     )
 
 
@@ -91,11 +91,6 @@ async def alarm5(context):
 
 gececi_mizah = [
 "ALOOOOO gececi... panelde bekleyen çek varsa ben mi bakayım?",
-"Uyuma lan… sahalarda biri bekliyorsa ayıp olur 😄",
-"Bir bakın şu sahalara, bot olarak ben utanıyorum artık",
-"Panel sessiz… siz de mi sessiz? şüphelendim şimdi 👀",
-"Burada kimse yoksa ben kapatıyorum ışıkları 😄",
-"Gececi kardeşim çay koyduysan bana da söyle",
 "Gece uzun… ama panel daha uzun 😄"
 ]
 
@@ -108,12 +103,7 @@ async def gececi_troll(context):
 ekip_mizah = [
 "ALOOOO ekip… herkes yaşıyor mu?",
 "Şu anki ruh halim: %10 kahve, %20 panik, %70 'neyse ya hallederiz'",
-"Bu sessizlik hiç hayra alamet değil",
 "Panel sakin ama ben size güvenmiyorum kontrol edin 😄",
-"Bir sahalara bakın da içimiz rahat etsin",
-"Bot olarak görevimi yapıyorum… siz de yapın 😄",
-"ALOOOOOOOOOOOO ekip hayattayız dimi?",
-"Ben botum ama ben bile panik yaptım 😄"
 ]
 
 async def ekip_troll(context):
@@ -123,19 +113,11 @@ async def ekip_troll(context):
 # -------- RANDOM --------
 
 random_laf = [
-"Arkadaşlar, vizyonumuz Elon Musk ama bütçemiz Mahmut Abi'nin bakkal defteri gibi.",
-"Beyler operasyon o kadar pürüzsüz ki bir an battık sandım.",
 "Saha ekibi yine 'hallediyoruz' modunda mı yoksa gerçekten hallediyor mu?",
 "Çekim paneliyle bakışıyoruz... o bana 'para yok' diyor ben ona 'vizyon var' diyorum.",
 "Hissediyorum... bir yerde bir çekim talebi bekliyor olabilir.",
 "Neyse ben kaçtım sisteme bir şeyler yazmam lazım.",
-"Arkadaşlar 'hallettik' mesajı gelene kadar ben kendimi nadasa bırakıyorum.",
-"Bugün sistemle küçük bir anlaşma yaptım: biz çalışacağız o da sorun çıkarmayacak.",
-"Operasyon günlüğü: herkes sessiz, panel sakin, ben şüpheliyim.",
-"Ben burada çalışıyorum siz napıyorsunuz 😄",
 "Ekip sahalar nasıl?",
-"Panel sakin ama ben tetikteyim 👀",
-"Her şey yolundaysa devam 👍",
 "Şu an bir yerde bir çekim talebi bekliyor olabilir."
 ]
 
@@ -168,7 +150,6 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), mesaj_kontrol))
-
     app.add_handler(CommandHandler("yaz", yaz))
     app.add_handler(CommandHandler("troll", troll))
 
@@ -180,15 +161,19 @@ def main():
     job.run_daily(nobet_mesaji,time(hour=5,minute=0,tzinfo=tz))
     job.run_daily(oguz_mesaji,time(hour=5,minute=12,tzinfo=tz))
 
-    for h in range(0,8):
+    # GECECİ → 3 SAATTE 1
+    for h in range(0,8,3):
         job.run_daily(gececi_troll,time(hour=h,minute=20,tzinfo=tz))
 
-    for h in range(9,23):
+    # EKİP → 4 SAATTE 1
+    for h in range(9,23,4):
         job.run_daily(ekip_troll,time(hour=h,minute=40,tzinfo=tz))
 
+    # RANDOM → AYNI
     for h in [11,15,19]:
         job.run_daily(bot_random,time(hour=h,minute=10,tzinfo=tz))
 
+    # KRİTİKLER (AYNI)
     for h in range(24):
         job.run_daily(alarm1,time(hour=h,minute=0,tzinfo=tz))
 
