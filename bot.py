@@ -10,33 +10,6 @@ ADMIN_ID = 8467771210
 
 tz = pytz.timezone("Europe/Istanbul")
 
-# -------- SOHBET --------
-
-selam_cevaplar = [
-"Hoş geldin baba kolay gele",
-"Cehenneme hoş geldin 😄",
-"Selam kral hoş geldin",
-"Hoş geldin reis"
-]
-
-kolay_cevaplar = [
-"Sana da kolay gelsin 💪",
-"Eyvallah sana da kolay gelsin",
-"Kolay gelsin ekip",
-"Kolay gelsin kral"
-]
-
-async def mesaj_kontrol(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    text = update.message.text.lower()
-
-    if "selam" in text:
-        await update.message.reply_text(random.choice(selam_cevaplar))
-
-    elif "kolay gelsin" in text:
-        await update.message.reply_text(random.choice(kolay_cevaplar))
-
-
 # -------- GİZLİ KOMUTLAR --------
 
 async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
