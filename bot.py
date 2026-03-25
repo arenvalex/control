@@ -122,7 +122,6 @@ def main():
 
     app = ApplicationBuilder().token(TOKEN).build()
 
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), mesaj_kontrol))
     app.add_handler(CommandHandler("yaz", yaz))
     app.add_handler(CommandHandler("troll", troll))
 
