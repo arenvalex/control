@@ -82,22 +82,6 @@ ekip_mizah = [
 async def ekip_troll(context):
     await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(ekip_mizah))
 
-
-# -------- RANDOM --------
-
-random_laf = [
-"Saha ekibi yine 'hallediyoruz' modunda mı yoksa gerçekten hallediyor mu?",
-"Çekim paneliyle bakışıyoruz... o bana 'para yok' diyor ben ona 'vizyon var' diyorum.",
-"Hissediyorum... bir yerde bir çekim talebi bekliyor olabilir.",
-"Neyse ben kaçtım sisteme bir şeyler yazmam lazım.",
-"Ekip sahalar nasıl?",
-"Şu an bir yerde bir çekim talebi bekliyor olabilir."
-]
-
-async def bot_random(context):
-    await context.bot.send_message(chat_id=CHAT_ID,text=random.choice(random_laf))
-
-
 # -------- ÖZEL --------
 
 async def gece_mesaji(context):
