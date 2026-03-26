@@ -125,10 +125,6 @@ def main():
     for h in range(9,23,4):
         job.run_daily(ekip_troll,time(hour=h,minute=40,tzinfo=tz))
 
-    # RANDOM → AYNI
-    for h in [11,15,19]:
-        job.run_daily(bot_random,time(hour=h,minute=10,tzinfo=tz))
-
     # KRİTİKLER (AYNI)
     for h in range(24):
         job.run_daily(alarm1,time(hour=h,minute=0,tzinfo=tz))
