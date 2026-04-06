@@ -3,7 +3,7 @@ from datetime import time
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
-TOKEN = "TOKEN_BURAYA"
+TOKEN = "8675707540:AAFL_9t3xnAktDPZQSs-9YJeaPuqNqu_N5Y"
 CHAT_ID = -1002241478647
 ADMIN_ID = 8467771210
 
