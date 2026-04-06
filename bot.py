@@ -26,6 +26,12 @@ async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # -------- MESAJLAR --------
 
+async def alarm1(context):
+    await context.bot.send_message(
+        chat_id=CHAT_ID,
+        text="Her şey yolunda mı? Lütfen Mesajı alıntılayarak sorun var ise bildiriniz!"
+    )
+
 async def alarm3(context):
     await context.bot.send_message(
         chat_id=CHAT_ID,
@@ -70,8 +76,11 @@ def main():
     job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
     job.run_daily(gece_hatirlatma, time(hour=23, minute=50, tzinfo=tz))
 
-    # SAAT BAŞI → KASA
+    # SAAT BAŞI → KASA (00:00, 01:00, ...)
     job.run_repeating(alarm3, interval=3600, first=0)
+
+    # SAAT BAŞI +10 DK → GENEL DURUM (00:10, 01:10, ...)
+    job.run_repeating(alarm1, interval=3600, first=600)
 
     # 35 DK → ÇEKİM
     job.run_repeating(alarm5, interval=2100, first=0)
