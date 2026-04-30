@@ -9,6 +9,38 @@ ADMIN_ID = 8467771210
 
 tz = pytz.timezone("Europe/Istanbul")
 
+# -------- MESAJ SİLME --------
+
+async def mesaj_sil(context: ContextTypes.DEFAULT_TYPE):
+    job = context.job
+    try:
+        await context.bot.delete_message(
+            chat_id=job.data["chat_id"],
+            message_id=job.data["message_id"]
+        )
+    except:
+        pass
+
+
+# -------- GÖNDER + 10 DK SONRA SİL --------
+
+async def gonder_ve_sil(context, text):
+    msg = await context.bot.send_message(
+        chat_id=CHAT_ID,
+        text=text
+    )
+
+    # 10 dakika sonra sil
+    context.job_queue.run_once(
+        mesaj_sil,
+        when=600,
+        data={
+            "chat_id": CHAT_ID,
+            "message_id": msg.message_id
+        }
+    )
+
+
 # -------- GİZLİ KOMUT --------
 
 async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -21,46 +53,39 @@ async def yaz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         pass
 
     mesaj = " ".join(context.args)
-    await context.bot.send_message(chat_id=CHAT_ID, text=mesaj)
+
+    msg = await context.bot.send_message(chat_id=CHAT_ID, text=mesaj)
+
+    # 10 dk sonra sil
+    context.job_queue.run_once(
+        mesaj_sil,
+        when=600,
+        data={
+            "chat_id": CHAT_ID,
+            "message_id": msg.message_id
+        }
+    )
 
 
 # -------- MESAJLAR --------
 
 async def alarm1(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Her şey yolunda mı? Lütfen Mesajı alıntılayarak sorun var ise bildiriniz!"
-    )
+    await gonder_ve_sil(context, "Her şey yolunda mı? Lütfen Mesajı alıntılayarak sorun var ise bildiriniz!")
 
 async def alarm3(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Genel sahalardaki kasa uygunluğunu öğrenebilir miyiz? Lütfen Mesajı alıntılayarak uygunluk listesini iletiniz!"
-    )
+    await gonder_ve_sil(context, "Genel sahalardaki kasa uygunluğunu öğrenebilir miyiz? Lütfen Mesajı alıntılayarak uygunluk listesini iletiniz!")
 
 async def alarm4(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Mesai sırasında eğer 2 kişiyseniz 2 saatte bir yerlerinizi değiştiriniz. Değişim sonrası görev yerlerinizi alıntı yaparak cevap veriniz!"
-    )
+    await gonder_ve_sil(context, "Mesai sırasında eğer 2 kişiyseniz 2 saatte bir yerlerinizi değiştiriniz. Değişim sonrası görev yerlerinizi alıntı yaparak cevap veriniz!")
 
 async def alarm5(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Sahalardaki bekleyen çekimleri kontrol edelim, uzun süre bekleyen varsa bilgi geçelim. VİP ve PREVİP oyunculara öncelik verelim eğer çekim gitmeyecekse manuel gönderelim!"
-    )
+    await gonder_ve_sil(context, "Sahalardaki bekleyen çekimleri kontrol edelim, uzun süre bekleyen varsa bilgi geçelim. VİP ve PREVİP oyunculara öncelik verelim eğer çekim gitmeyecekse manuel gönderelim!")
 
 async def gece_mesaji(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="Gececi arkadaşlara Allah kolaylık versin."
-    )
+    await gonder_ve_sil(context, "Gececi arkadaşlara Allah kolaylık versin.")
 
 async def gece_hatirlatma(context):
-    await context.bot.send_message(
-        chat_id=CHAT_ID,
-        text="ALOOOOOOOOOOOO bekleyen çekimleri 00:00'a göre ayarlat unutma!"
-    )
+    await gonder_ve_sil(context, "ALOOOOOOOOOOOO bekleyen çekimleri 00:00'a göre ayarlat unutma!")
 
 
 # -------- BOT --------
@@ -76,10 +101,10 @@ def main():
     job.run_daily(gece_mesaji, time(hour=0, minute=2, tzinfo=tz))
     job.run_daily(gece_hatirlatma, time(hour=23, minute=50, tzinfo=tz))
 
-    # SAAT BAŞI → KASA (00:00, 01:00, ...)
+    # SAAT BAŞI → KASA
     job.run_repeating(alarm3, interval=3600, first=0)
 
-    # SAAT BAŞI +10 DK → GENEL DURUM (00:10, 01:10, ...)
+    # SAAT BAŞI +10 DK → GENEL DURUM
     job.run_repeating(alarm1, interval=3600, first=600)
 
     # 35 DK → ÇEKİM
